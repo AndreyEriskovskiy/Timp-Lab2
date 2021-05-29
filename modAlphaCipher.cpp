@@ -12,7 +12,7 @@ modAlphaCipher::modAlphaCipher(const wstring& skey)
 
 wstring modAlphaCipher::encrypt(const wstring& open_text)
 {
-    vector<int> work = convert(getValidOpenText(open_text));
+    vector<int> work = convert(getValidText(open_text));
     for(unsigned i=0; i < work.size(); i++) {
         work[i] = (work[i] + key[i % key.size()]) % alphaNum.size();
     }
@@ -21,7 +21,7 @@ wstring modAlphaCipher::encrypt(const wstring& open_text)
 
 wstring modAlphaCipher::decrypt(const wstring& cipher_text)
 {
-    vector<int> work = convert(getValidOpenText(cipher_text));
+    vector<int> work = convert(getValidText(cipher_text));
     for(unsigned i=0; i < work.size(); i++) {
         work[i] = (work[i] + alphaNum.size() - key[i % key.size()]) % alphaNum.size();
     }
@@ -63,7 +63,7 @@ inline wstring modAlphaCipher::getValidKey(const wstring & s)
     return tmp;
 }
 
-inline wstring modAlphaCipher::getValidOpenText(const wstring & s)
+inline wstring modAlphaCipher::getValidText(const wstring & s)
 {
     locale loc("ru_RU.UTF-8");
     locale::global(loc);
