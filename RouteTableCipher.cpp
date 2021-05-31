@@ -73,5 +73,9 @@ int cipher_error::getValidText(const string text)
 {
     if(text.empty())
         throw cipher_error("Текст не должен быть пустым");
+    for(auto c:text) {
+        if(!isalpha(c))
+            throw cipher_error("Введён некорректный текст");
+    }
    
 }
