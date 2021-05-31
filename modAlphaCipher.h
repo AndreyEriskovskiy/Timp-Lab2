@@ -15,7 +15,8 @@ private:
     vector<int> convert(const wstring& s); //преобразование строка-вектор
     wstring convert(const vector<int>& v); //преобразование вектор-строка
     wstring getValidKey(const wstring& s);
-    wstring getValidText(const wstring & s);
+    wstring getValidOpenText(const wstring & s);
+    wstring getValidCipherText(const wstring & s);
 public:
     modAlphaCipher()=delete; //запретим конструктор без параметров
     modAlphaCipher(const wstring& skey); //конструктор для установки ключа
