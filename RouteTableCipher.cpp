@@ -71,6 +71,6 @@ int cipher_error::getValidText(const string text)
 {
     if(text.empty())
         throw cipher_error("Текст не должен быть пустым");
-    if(text.find_first_not_of("АаБбВвГгДдЕеЁёЖжЗзИиКкЛлМмНнОоПпРрСсТтУуПпФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя",0)==string::npos)
+    if(text.find_first_not_of("АаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя",0)==string::npos)
         throw cipher_error("Недопустимые символы, в тексте не должно быть русских букв");
 }
