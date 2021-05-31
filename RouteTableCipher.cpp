@@ -61,11 +61,9 @@ int cipher_error::getValidKey(const string& skey)
     int tmp;
     if(skey.empty())
         throw cipher_error("Пустой ключ");
-    if(skey.find("0123456789")!=string::npos)
+    if(skey.find_first_not_of("0123456789",0)!=string::npos)
         throw cipher_error("Недопустимые символы, ключ должен быть числом больше нуля");
     tmp=stoi(skey);
-    if(tmp<=0)
-        throw cipher_error("Ключ должен быть положительным числом");
     return 0;
 }
 
@@ -73,9 +71,4 @@ int cipher_error::getValidText(const string text)
 {
     if(text.empty())
         throw cipher_error("Текст не должен быть пустым");
-    for(auto c:text) {
-        if(!isalpha(c))
-            throw cipher_error("Введён некорректный текст");
-    }
-   
 }
