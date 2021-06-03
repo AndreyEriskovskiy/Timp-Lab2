@@ -12,7 +12,7 @@ modAlphaCipher::modAlphaCipher(const wstring& skey)
 
 wstring modAlphaCipher::encrypt(const wstring& open_text)
 {
-    vector<int> work = convert(getValidText(open_text));
+    vector<int> work = convert(getValidOpenText(open_text));
     for(unsigned i=0; i < work.size(); i++) {
         work[i] = (work[i] + key[i % key.size()]) % alphaNum.size();
     }
@@ -21,7 +21,7 @@ wstring modAlphaCipher::encrypt(const wstring& open_text)
 
 wstring modAlphaCipher::decrypt(const wstring& cipher_text)
 {
-    vector<int> work = convert(getValidText(cipher_text));
+    vector<int> work = convert(getValidCipherText(cipher_text));
     for(unsigned i=0; i < work.size(); i++) {
         work[i] = (work[i] + alphaNum.size() - key[i % key.size()]) % alphaNum.size();
     }
@@ -82,5 +82,28 @@ inline wstring modAlphaCipher::getValidText(const wstring & s)
     if (tmp.empty())
         throw cipher_error("Empty open text");
     return tmp;
+}
+
+inline wstring modAlphaCipher::getValidCipherText(const wstring & s)
+{
+    locale loc("ru_RU-UTF.8");
+    locale::global(loc);
+    wstring tmp;
+    for (auto c:s) {
+        if(!iswalpha(c)) {
+            throw cipher_error("Invalid cipher text");
+            break;
+        }
+        if(iswlower(c))
+            tmp.push_back(towupper(c));
+        else
+            tmp.push_back(c);
+    }
+
+    if (tmp.empty())
+        throw cipher_error("Empty cipher text");
+    return tmp;
+    
+    return s;
 }
 
