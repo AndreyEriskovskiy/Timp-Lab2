@@ -63,7 +63,7 @@ inline wstring modAlphaCipher::getValidKey(const wstring & s)
     return tmp;
 }
 
-inline wstring modAlphaCipher::getValidOpenText(const wstring & s)
+inline wstring modAlphaCipher::getValidText(const wstring & s)
 {
     locale loc("ru_RU.UTF-8");
     locale::global(loc);
@@ -84,15 +84,3 @@ inline wstring modAlphaCipher::getValidOpenText(const wstring & s)
     return tmp;
 }
 
-inline wstring modAlphaCipher::getValidCipherText(const wstring & s)
-{
-    locale loc("ru_RU-UTF.8");
-    locale::global(loc);
-    if (s.empty())
-        throw cipher_error("Empty cipher text");
-    for (auto c:s) {
-        if (!iswupper(c))
-            throw cipher_error ("Invalid cipher text ");
-    }
-    return s;
-}
