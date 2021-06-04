@@ -69,8 +69,21 @@ int cipher_error::getValidKey(const string& skey)
 
 int cipher_error::getValidText(const string text)
 {
+    locale loc("ru_RU.UTF-8");
+    locale::global(loc);
     if(text.empty())
         throw cipher_error("Текст не должен быть пустым");
-    if(text.find_first_not_of("АаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя",0)==string::npos)
-        throw cipher_error("Недопустимые символы, в тексте не должно быть русских букв");
+    wstring_convert<codecvt_utf8<wchar_t>, wchar_t> codec;
+    wstring wtext=codec.from_bytes(text);
+    int len=wtext.length();
+    for (int i=0;i<len;i++) {
+        if(wtext[i]>=L'А' && wtext[i]<=L'я') {
+            if(wtext[i]>=L'а' && wtext[i]<=L'я') {
+                throw cipher_error("В тексте не должно быть русских букв");
+            }
+        }
+    }
+    
 }
+ 
+
